@@ -21,7 +21,7 @@ class Address(models.Model):
     """ Model for addresses. One user can store many addresses. """
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    country = CountryField()
+    country = CountryField(null=True)
     city = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
     zip_code = models.CharField(max_length=10)
