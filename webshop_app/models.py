@@ -21,7 +21,7 @@ class Address(models.Model):
     """ Model for addresses. One user can store many addresses. """
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    # country = CountryField()
+    country = CountryField()
     city = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
     zip_code = models.CharField(max_length=10)
@@ -44,7 +44,7 @@ class Product(models.Model):
     product = models.CharField(max_length=100)
     description = models.TextField(null=True)
     price = models.DecimalField(decimal_places=2, max_digits=10)
-    # picture = models.ImageField(upload_to='webshop_app/static/media/products', null=True, blank=True)
+    picture = models.ImageField(upload_to='webshop_app/static/media/products', null=True, blank=True)
     available = models.BooleanField(default=True, null=False)
 
     def __str__(self):
@@ -61,7 +61,6 @@ class Cart(models.Model):
 class Order(models.Model):
     """ Order model. """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # cart = models.ManyToManyField(Cart)  # błąd = do poprawy
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     order_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False)
     order_date = models.DateTimeField(default=datetime.now)
