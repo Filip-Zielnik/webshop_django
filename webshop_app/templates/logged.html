@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Konto</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        .tab th {
+            border: 2px solid black;
+            padding: 5px;
+        }
+        .tab td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+    </style>
+
+{% endblock %}
+
+
+{% block body %}
+
+    {% csrf_token %}
+    <strong>Twoje dane:</strong>
+
+    <li>Nazwa użytkownika: {{ user.username }}</li>
+    <li>Imię: {{ user.first_name }}</li>
+    <li>Nazwisko: {{ user.last_name }}</li>
+    <li>Email: {{ user.email }}</li>
+    <li>Data urodzin: {{ user.profile.birth_date }}</li>
+    <a href="{% url 'update-user' %}">Zmień dane</a>
+
+    <br>
+
+    <a href="{% url 'change-password' %}">Zmień hasło</a>
+
+    <p></p>
+
+    <strong>Twoje adresy:</strong>
+    {% for address in address_form %}
+        <li><a href="/address/{{ address.id }}/">{{ address.name }}</a></li>
+    {% endfor %}
+    <a href="{% url 'add-address' %}">Dodaj adres</a>
+
+    <p></p>
+
+    {% if order_form %}
+        <strong>Twoje zamówienia:</strong>
+        <table class="tab">
+                <thead>
+                    <th>Data</th>
+                    <th>Nr zamówienia</th>
+                </thead>
+            <tbody>
+                {% for order in order_form %}
+                    <tr>
+                        <td>{{ order.order_date }}</td>
+                        <td><a href="/order/{{ order.id }}/">{{ order.order_id }}</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+    {% endif %}
+
+{% endblock %}

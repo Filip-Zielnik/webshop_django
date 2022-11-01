@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Zmień adres</title>
+{% endblock %}
+
+
+{% block body %}
+
+    {% if messages %}
+        {% for message in messages %}
+
+            {% if message.tags == 'success' %}
+                <p style="color:green"><strong>{{message}}</strong></p>
+            {% endif %}
+
+            {% if message.tags == 'error' %}
+                <p style="color:red"><strong>{{message}}</strong></p>
+            {% endif %}
+
+        {% endfor %}
+    {% endif %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="Zmień adres">
+    </form>
+
+{% endblock %}

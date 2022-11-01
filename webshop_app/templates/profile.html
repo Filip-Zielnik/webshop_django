@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Dane</title>
+{% endblock %}
+
+{% block body %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        <input type="submit" value="Zmień">
+    </form>
+
+{% endblock %}

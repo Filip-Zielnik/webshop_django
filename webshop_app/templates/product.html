@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>
+        {% for product in form %}
+            {{ product.product }}
+        {% endfor %}
+    </title>
+{% endblock %}
+
+{% block body %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        {% for product in product_form %}
+
+            {% if messages %}
+                {% for message in messages %}
+                    <p style="color:green"><strong>{{message}}</strong></p>
+                {% endfor %}
+            {% endif %}
+
+            <h1>{{ product.product }}</h1>
+
+            <p><strong>Specyfikacja:</strong>
+            {{ product.description|linebreaks }}</p>
+
+            <p><strong>Cena:</strong>
+            {{ product.price }} PLN</p>
+
+            {% if product.available == True %}
+                <p style="color:green"><strong>Produkt dostępny!</strong></p>
+
+                {% if user.is_authenticated %}
+                    <a href="/add-to-cart/{{ product.pk }}/">Dodaj do koszyka</a>
+                {% else %}
+                    <p><i>*** Aby dodać produkt do koszyka musisz być zalogowany! ***</i></p>
+                {% endif %}
+
+            {% elif product.available == False %}
+                <p style="color:red"><strong>Produkt niedostępny!</strong></p>
+            {% endif %}
+        {% endfor %}
+
+        <h1>Komentarze:</h1>
+
+        {% if comment_form %}
+            {% for comment in comment_form %}
+                <span style="font-size:20px">{{ comment.text }}</span>
+                <br>
+                <span style="font-size:15px">
+                    Dodany przez: {{ comment.user }} | {{ comment.text_date }}
+
+                    {% if user == comment.user %}
+                        {% for product in product_form %}
+                            | <a href="/remove-comment/{{ comment.id }}/{{ product.pk }}/">Usuń</a>
+                        {% endfor %}
+                    {% endif %}
+
+                </span>
+                <p></p>
+            {% endfor %}
+        {% else %}
+            Ten produkt nie ma jeszcze żadnych komentarzy.
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            {{ add_comment_form.as_p }}
+            <input type="submit" value="Dodaj komentarz">
+        {% endif %}
+    </form>
+{% endblock %}

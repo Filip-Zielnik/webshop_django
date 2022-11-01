@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Szczegóły zamówienia</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        .tab th {
+            border: 2px solid black;
+            padding: 5px;
+        }
+        .tab td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+    </style>
+
+{% endblock %}
+
+
+{% block body %}
+
+    {% for order in order_form %}
+        Nr zamówienia: <strong>{{ order.order_id }}</strong>
+        <br>
+        Data złożenia zamówienia: <strong>{{ order.order_date }}</strong>
+    {% endfor %}
+
+    <p></p>
+
+    <table class="tab">
+        <thead>
+            <th>Produkt</th>
+            <th>Ilość</th>
+            <th>Cena</th>
+        </thead>
+        <tbody>
+        {% for cart in cart_form %}
+            <tr>
+                <td>{{ cart.product }}</td>
+                <td>{{ cart.quantity }}</td>
+                <td>{{ cart.product.price }} PLN</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

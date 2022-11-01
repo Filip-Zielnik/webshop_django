@@ -1,0 +1,102 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+{#        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />#}
+        {% block head %}
+            <meta charset="UTF-8">
+            <title>Base Page</title>
+        {% endblock %}
+    </head>
+
+    <body>
+        <div class="navigation">
+            <ul>
+                <li class="list active">
+                    <a href="http://127.0.0.1:8000/">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="text">Strona główna</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="reorder-three-outline"></ion-icon>
+                        </span>
+                        <span class="text">
+                            <select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                <option value="0">Kategorie</option>
+                                <option value="http://127.0.0.1:8000/category/cpu/">Procesory</option>
+                                <option value="http://127.0.0.1:8000/category/gpu/">Karty graficzne</option>
+                                <option value="http://127.0.0.1:8000/category/motherboards/">Płyty główne</option>
+                            </select>
+                        </span>
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="list">
+                        <a href="{% url 'cart' %}">
+                            <span class="icon">
+                                <ion-icon name="basket-outline"></ion-icon>
+                            </span>
+                            <span class="text">Koszyk</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="{% url 'logged' %}">
+                            <span class="icon">
+                                <ion-icon name="person-outline"></ion-icon>
+                            </span>
+                            <span class="text">Konto</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="{% url 'logout' %}">
+                            <span class="icon">
+                                <ion-icon name="log-out-outline"></ion-icon>
+                            </span>
+                            <span class="text">Wyloguj</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="list">
+                        <a href="http://127.0.0.1:8000/login/">
+                            <span class="icon">
+                                <ion-icon name="log-in-outline"></ion-icon>
+                            </span>
+                            <span class="text">Login</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="http://127.0.0.1:8000/registration/">
+                            <span class="icon">
+                                <ion-icon name="person-add-outline"></ion-icon>
+                            </span>
+                            <span class="text">Rejestracja</span>
+                        </a>
+                    </li>
+                {% endif %}
+                <div class="indicator"></div>
+            </ul>
+        </div>
+
+        <script>
+            const list = document.querySelectorAll('.list');
+            function activeLink(){
+                list.forEach((item) =>
+                    item.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            list.forEach((item) =>
+                item.addEventListener('click', activeLink));
+        </script>
+
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+        {% block body %}{% endblock %}
+
+    </body>
+</html>

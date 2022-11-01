@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>
+        {% for address in form %}
+            {{ address.name }}
+        {% endfor %}
+    </title>
+{% endblock %}
+
+{% block body %}
+
+    {% for address in form %}
+        <strong>{{ address.name }}:</strong>
+        <li>Państwo: {{ address.country }}</li>
+        <li>Miasto: {{ address.city }}</li>
+        <li>Ulica: {{ address.address }}</li>
+        <li>Kod pocztowy: {{ address.zip_code }}</li>
+
+        <a href="/changeaddress/{{ address.id }}/">Zmień adres</a>
+
+        <br>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Usuń adres">
+        </form>
+
+    {% endfor %}
+
+{% endblock %}
