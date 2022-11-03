@@ -1,5 +1,5 @@
 **Link to application on heroku server:**
-https://webshop-fzk.herokuapp.com/
+soon
 
 # **Webshop:**
 - Django application
