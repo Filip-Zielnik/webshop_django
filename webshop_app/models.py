@@ -10,7 +10,7 @@ from django_countries.fields import CountryField
 
 class Profile(models.Model):
     """ Extends auth.User model. """
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
     birth_date = models.DateField()
 
     def __str__(self):
@@ -61,12 +61,22 @@ class Cart(models.Model):
 class Order(models.Model):
     """ Order model. """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    cart = models.ManyToManyField(Cart)
     order_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False)
     order_date = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
         return str(self.user)
+
+# class Order(models.Model):
+#     """ Order model. """
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+#     order_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False)
+#     order_date = models.DateTimeField(default=datetime.now)
+#
+#     def __str__(self):
+#         return str(self.user)
 
 
 class Comment(models.Model):

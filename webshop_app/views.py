@@ -58,17 +58,18 @@ class UpdateUserView(LoginRequiredMixin, View):
 
     login_url = '/login/'
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         """ Displays user's data. """
         update_user_form = UpdateUserForm(instance=request.user)
         update_profile_form = UpdateProfileForm(instance=request.user.profile)
         context = {
             'update_user_form': update_user_form,
             'update_profile_form': update_profile_form,
+
         }
         return render(request=request, template_name="update_user.html", context=context)
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         """ Modifies user's data. """
         update_user_form = UpdateUserForm(request.POST, instance=request.user)
         update_profile_form = UpdateProfileForm(request.POST, instance=request.user.profile)
