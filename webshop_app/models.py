@@ -44,7 +44,7 @@ class Product(models.Model):
     product = models.CharField(max_length=100)
     description = models.TextField(null=True)
     price = models.DecimalField(decimal_places=2, max_digits=10)
-    picture = models.ImageField(upload_to='webshop_app/static/media/products', null=True, blank=True)
+    picture = models.ImageField(upload_to='staticfiles/images/', null=True, blank=True)
     available = models.BooleanField(default=True, null=False)
 
     def __str__(self):
@@ -67,16 +67,6 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.user)
-
-# class Order(models.Model):
-#     """ Order model. """
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-#     order_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False)
-#     order_date = models.DateTimeField(default=datetime.now)
-#
-#     def __str__(self):
-#         return str(self.user)
 
 
 class Comment(models.Model):
