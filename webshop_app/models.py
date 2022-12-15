@@ -10,7 +10,7 @@ from django_countries.fields import CountryField
 
 class Profile(models.Model):
     """ Extends auth.User model. """
-    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     birth_date = models.DateField()
 
     def __str__(self):

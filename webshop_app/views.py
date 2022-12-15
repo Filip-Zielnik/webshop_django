@@ -21,7 +21,7 @@ class HomeView(View):
 class RegistrationView(View):
     """ Allows user to create account. """
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         """ Displays registration form with extended django-user's fields. """
         user_form = UserForm
         profile_form = ProfileForm
@@ -31,7 +31,7 @@ class RegistrationView(View):
         }
         return render(request=request, template_name="registration.html", context=context)
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         """ Creates a new user. """
         user_form = UserForm(request.POST)
         profile_form = ProfileForm(request.POST)
@@ -123,7 +123,7 @@ class ChangePasswordView(LoginRequiredMixin, View):
 class LoginView(View):
     """ Allows user to log in using username & password. """
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         """ Displays login form. """
         form = LoginForm
         context = {
@@ -131,7 +131,7 @@ class LoginView(View):
         }
         return render(request=request, template_name="login.html", context=context)
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         """ Logs the user in. """
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -153,7 +153,7 @@ class LoginView(View):
 class LogoutView(View):
     """ Allows user to log out. """
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         """ Logs out the user. """
         logout(request)
         return render(request=request, template_name='logout.html')
@@ -164,7 +164,7 @@ class LoggedView(LoginRequiredMixin, View):
 
     login_url = '/login/'
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         """ Displays user's data such as username, first name, address, ect. """
         address_form = Address.objects.filter(profile_id=request.user.id).order_by('name')
         order_form = Order.objects.filter(user_id=request.user.id).order_by('-order_date')
@@ -180,7 +180,7 @@ class AddressView(LoginRequiredMixin, View):
 
     login_url = '/login/'
 
-    def get(self, request, address_id):
+    def get(self, request, address_id, *args, **kwargs):
         """ Displays detailed information about address such as country, city, ect. """
         form = Address.objects.filter(profile_id=request.user.id, id=address_id)
         context = {
@@ -188,7 +188,7 @@ class AddressView(LoginRequiredMixin, View):
         }
         return render(request=request, template_name="address.html", context=context)
 
-    def post(self, request, address_id):
+    def post(self, request, address_id, *args, **kwargs):
         """ Deletes the user's address. """
         address = Address.objects.filter(profile_id=request.user.id, id=address_id)
         address.delete()
@@ -200,7 +200,7 @@ class AddAddressView(LoginRequiredMixin, View):
 
     login_url = '/login/'
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         """ Displays address form to fill. """
         form = AddAddressForm()
         context = {
@@ -208,7 +208,7 @@ class AddAddressView(LoginRequiredMixin, View):
         }
         return render(request=request, template_name="add_address.html", context=context)
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         """ Creates new user's address. """
         form = AddAddressForm(request.POST)
 
@@ -242,7 +242,7 @@ class ChangeAddressView(LoginRequiredMixin, View):
 
     login_url = '/login/'
 
-    def get(self, request, address_id):
+    def get(self, request, address_id, *args, **kwargs):
         """ Displays changeable address details. """
         address = Address.objects.get(profile_id=request.user.id, id=address_id)
         form = AddAddressForm(instance=address)
@@ -251,7 +251,7 @@ class ChangeAddressView(LoginRequiredMixin, View):
         }
         return render(request=request, template_name="change_address.html", context=context)
 
-    def post(self, request, address_id):
+    def post(self, request, address_id, *args, **kwargs):
         """ Modifies user's address. """
         address = Address.objects.get(profile_id=request.user.id, id=address_id)
         form = AddAddressForm(request.POST, instance=address)
